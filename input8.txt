@@ -1,0 +1,104 @@
+SET ARQUIVO_CLIENTES '66545678765;Maria Eugenia;12/04/1980;mariaeugenia@gmail.com;15998765645;0000000775.40;A97301660-afcb-4ea4-a5a6-7c3abe8b8fbb&C66545678765&N15998765645&Emariaeugenia@gmail.com;##################################################################################99876556782;Gabriel Augusto;04/05/1997;ga.augusto@gmail.com;15997675654;0000000670.00;C99876556782&N15997675654;################################################################################################################################################44565434213;Geovana Santana;25/10/1994;ge.santana@gmail.com;16996543652;0000001786.40;Ege.santana@gmail.com&C44565434213;#######################################################################################################################################54654367865;Gustavo Almeida;19/11/1992;galmeida@gmail.com;14998786754;0000000000.00;N14998786754&Egalmeida@gmail.com;###########################################################################################################################################37567876542;Melissa Santos;13/04/1977;melissa@gmail.com;15998765435;1000000440.92;;#############################################################################################################################################################################14565436782;Melissa Pereira;19/09/1993;melissa@gmail.com;15997654738;0000000764.00;Emelissa@gmail.com&A8c29d4ca-06a1-4ef4-b45c-0470946831c5&C14565436782;#######################################################################################################23465784759;Jose Santos;03/07/1968;josesantos@gmail.com;14998786754;0000000000.00;C23465784759;#################################################################################################################################################################95724566812;Roberto Oliveira Jr.;06/07/1976;rojr@house.tech;11976764356;0000000695.00;C95724566812;#############################################################################################################################################################';
+SET ARQUIVO_TRANSACOES '23465784759665456787650000000120.002021101107473754654367865957245668120000000790.002021102919381314565436782665456787650000000050.002021112600231654654367865445654342130000000260.802021121615460623465784759445654342130000000010.002022010616400154654367865445654342130000000200.002022012505581595724566812665456787650000000190.002022021902181295724566812665456787650000000300.002022031014200795724566812665456787650000000200.002022040615160295724566812665456787650000000075.002022042316281644565434213665456787650000001184.402022052014101366545678765957245668120000000100.002022060515305414565436782665456787650000000106.002022062112070695724566812665456787650000000095.002022071107341766545678765145654367820000000670.002022080221274866545678765998765567820000000670.002022082418521966545678765957245668120000000670.002022091223100395724566812665456787650000000005.0020221008014443';
+
+-- OPERAÇÕES CONTEMPLADAS PELO CASO DE TESTE:
+-- COM ARQUIVOS
+-- TRANSFERÊNCIA
+-- BUSCA DE TRANSAÇÃO
+-- LISTAGEM DE TRANSAÇÕES POR PERÍODO
+-- LISTAGEM DE TRANSAÇÕES POR CPF DE ORIGEM E PERÍODO
+-- IMPRIMIR ARQUIVO CLIENTES
+-- IMPRIMIR ARQUIVO TRANSAÇÕES
+-- IMPRIMIR ÍNDICE SECUNDÁRIO DE CHAVES PIX
+-- IMPRIMIR ÍNDICE SECUNDÁRIO DE TRANSAÇÕES
+
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index chaves_pix_index
+\echo index timestamp_cpf_origem_index
+
+SET TIME 1633938457;
+SET SRAND 11945338153067011559;
+
+INSERT INTO transacoes VALUES ('melissa@gmail.com', '15997675654', 94);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('95724566812', '99876556782', 25);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('66545678765', 'ge.santana@gmail.com', 45);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('15998765645', 'ge.santana@gmail.com', 320);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('mariaeugenia@gmail.com', 'ge.santana@gmail.com', 75);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('99876556782', 'ge.santana@gmail.com', 119);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('44565434213', '15998765645', 334.6);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('ge.santana@gmail.com', '23465784759', 1340);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('23465784759', 'galmeida@gmail.com', 670);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+-- busca de transação
+SELECT * FROM transacoes WHERE cpf_origem = '14565436782' AND timestamp = '20211126002316';
+SELECT * FROM transacoes WHERE cpf_origem = '14565436782' AND timestamp = '20211011074737';
+SELECT * FROM transacoes WHERE cpf_origem = '23465784759' AND timestamp = '20211011074737';
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp = '20221008014443';
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp = '20221008014444';
+SELECT * FROM transacoes WHERE cpf_origem = '14565436782' AND timestamp = '20211029193813';
+
+-- listagem de transação por período
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211011074737' AND '20221008014443' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211011074737' AND '20211011074737' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211029193813' AND '20211029193813' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211126002316' AND '20211126002316' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211216154606' AND '20211216154606' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220106164001' AND '20220106164001' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220125055815' AND '20220125055815' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220219021812' AND '20220219021812' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220310142007' AND '20220310142007' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220406151602' AND '20220406151602' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220125055815' AND '20220219021812' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20221008014443' AND '20221008014443' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220219021812' AND '20220125055815' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20221008014443' AND '2023' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '2021' AND '20211011074737' ORDER BY timestamp ASC;
+
+-- listagem de transação por CPF de origem e período
+SELECT * FROM transacoes WHERE cpf_origem = '99876556782' AND timestamp BETWEEN '20211011074737' AND '20221008014443' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '66545678765' AND timestamp BETWEEN '20211011074737' AND '20221008014443' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp BETWEEN '20211011074737' AND '20211029193813' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp BETWEEN '20211126002316' AND '20220219021811' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '99876556782' AND timestamp BETWEEN '20221008014443' AND '20211011074737' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp BETWEEN '20220310142007' AND '20220406151602' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '23465784759' AND timestamp BETWEEN '20220310142007' AND '20220406151602' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '23465784759' AND timestamp BETWEEN '20220310142007' AND '20220406151602' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '14565436782' AND timestamp BETWEEN '202201' AND '202203' ORDER BY timestamp ASC;
+
+\q

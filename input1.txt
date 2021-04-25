@@ -1,0 +1,67 @@
+-- OPERAÇÕES CONTEMPLADAS PELO CASO DE TESTE:
+-- CADASTRO
+-- DEPÓSITO E SAQUE
+-- IMPRIMIR ARQUIVO CLIENTES
+
+\echo file ARQUIVO_CLIENTES
+
+-- cliente A
+INSERT INTO clientes VALUES ('66545678765', 'Maria Eugenia', '12/04/1980', 'mariaeugenia@gmail.com', '15998765645');
+\echo file ARQUIVO_CLIENTES
+
+-- cliente B
+INSERT INTO clientes VALUES ('99876556782', 'Gabriel Augusto', '04/05/1997', 'ga.augusto@gmail.com', '15997675654');
+\echo file ARQUIVO_CLIENTES
+
+-- cliente C
+INSERT INTO clientes VALUES ('44565434213', 'Geovana Santana', '25/10/1994', 'ge.santana@gmail.com', '16996543652');
+\echo file ARQUIVO_CLIENTES
+
+-- cliente D
+INSERT INTO clientes VALUES ('54654367865', 'Gustavo Almeida', '19/11/1992', 'galmeida@gmail.com', '14998786754');
+\echo file ARQUIVO_CLIENTES
+
+-- cliente com CPF duplicado
+INSERT INTO clientes VALUES ('66545678765', 'Roberta Lima', '17/04/1991', 'roberta91@gmail.com', '11978876623');
+INSERT INTO clientes VALUES ('99876556782', 'Roberta Lima', '17/04/1991', 'roberta91@gmail.com', '11978876623');
+INSERT INTO clientes VALUES ('44565434213', 'Roberta Lima', '17/04/1991', 'roberta91@gmail.com', '11978876623');
+INSERT INTO clientes VALUES ('54654367865', 'Roberta Lima', '17/04/1991', 'roberta91@gmail.com', '11978876623');
+\echo file ARQUIVO_CLIENTES
+
+-- depósito para o cliente C
+UPDATE clientes SET saldo = saldo + 5 WHERE cpf = '44565434213';
+\echo file ARQUIVO_CLIENTES
+
+-- saque para o cliente C
+UPDATE clientes SET saldo = saldo + -3 WHERE cpf = '44565434213';
+\echo file ARQUIVO_CLIENTES
+
+-- saque para o cliente C
+UPDATE clientes SET saldo = saldo + -2 WHERE cpf = '44565434213';
+\echo file ARQUIVO_CLIENTES
+
+-- saque com saldo insuficiente para o cliente D
+UPDATE clientes SET saldo = saldo + -1 WHERE cpf = '54654367865';
+\echo file ARQUIVO_CLIENTES
+
+-- depósito para um cliente inexistente
+UPDATE clientes SET saldo = saldo + 1250.80 WHERE cpf = '3987655678';
+\echo file ARQUIVO_CLIENTES
+
+-- saque de um cliente inexistente
+UPDATE clientes SET saldo = saldo + -250.80 WHERE cpf = '3987655678';
+\echo file ARQUIVO_CLIENTES
+
+-- depósito válido para o cliente A utilizando todos os dígitos disponíveis para o saldo
+UPDATE clientes SET saldo = saldo + 4815002008.12 WHERE cpf = '66545678765';
+\echo file ARQUIVO_CLIENTES
+
+-- depósito válido para o cliente D
+UPDATE clientes SET saldo = saldo + 190 WHERE cpf = '54654367865';
+\echo file ARQUIVO_CLIENTES
+
+-- operação com valor ínválido para o cliente C
+UPDATE clientes SET saldo = saldo + 0 WHERE cpf = '54654367865';
+\echo file ARQUIVO_CLIENTES
+
+\q

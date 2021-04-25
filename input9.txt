@@ -1,0 +1,315 @@
+-- OPERAÇÕES CONTEMPLADAS PELO CASO DE TESTE:
+-- CADASTRO
+-- DEPÓSITO E SAQUE
+-- CADASTRO DE CHAVE PIX
+-- TRANSFERÊNCIA
+-- REMOÇÃO
+-- LIBERAR ESPAÇO
+-- BUSCA DE CLIENTES POR CPF
+-- BUSCA DE CLIENTES POR CHAVE PIX
+-- BUSCA DE TRANSAÇÃO
+-- LISTAGEM DE CLIENTES
+-- LISTAGEM DE TRANSAÇÕES POR PERÍODO
+-- LISTAGEM DE TRANSAÇÕES POR CPF DE ORIGEM E PERÍODO
+-- IMPRIMIR ARQUIVO CLIENTES
+-- IMPRIMIR ARQUIVO TRANSAÇÕES
+-- IMPRIMIR ÍNDICE SECUNDÁRIO DE CHAVES PIX
+-- IMPRIMIR ÍNDICE SECUNDÁRIO DE TRANSAÇÕES
+
+\echo file ARQUIVO_TRANSACOES
+
+-- cliente A
+INSERT INTO clientes VALUES ('66545678765', 'Maria Eugenia', '12/04/1980', 'mariaeugenia@gmail.com', '15998765645');
+
+-- cliente B
+INSERT INTO clientes VALUES ('99876556782', 'Gabriel Augusto', '04/05/1997', 'ga.augusto@gmail.com', '15997675654');
+
+-- cliente C
+INSERT INTO clientes VALUES ('44565434213', 'Geovana Santana', '25/10/1994', 'ge.santana@gmail.com', '16996543652');
+
+-- cliente D
+INSERT INTO clientes VALUES ('54654367865', 'Gustavo Almeida', '19/11/1992', 'galmeida@gmail.com', '14998786754');
+
+-- cliente E
+INSERT INTO clientes VALUES ('37567876542', 'Melissa Santos', '13/04/1977', 'melissa@gmail.com', '15998765435');
+
+-- cliente F, email igual ao do cliente E
+INSERT INTO clientes VALUES ('14565436782', 'Melissa Pereira', '19/09/1993', 'melissa@gmail.com', '15997654738');
+
+-- cliente G, celular igual ao do cliente D
+INSERT INTO clientes VALUES ('23465784759', 'Jose Santos', '03/07/1968', 'josesantos@gmail.com', '14998786754');
+\echo file ARQUIVO_CLIENTES
+
+-- Cliente H
+INSERT INTO clientes VALUES ('95724566812', 'Roberto Oliveira Jr.', '06/07/1976', 'rojr@house.tech', '11976764356');
+\echo file ARQUIVO_CLIENTES
+
+-- adicionando fundos às contas
+UPDATE clientes SET saldo = saldo + 1250.80 WHERE cpf = '54654367865';
+UPDATE clientes SET saldo = saldo + 250 WHERE cpf = '14565436782';
+UPDATE clientes SET saldo = saldo + 130 WHERE cpf = '23465784759';
+UPDATE clientes SET saldo = saldo + 250.80 WHERE cpf = '37567876542';
+UPDATE clientes SET saldo = saldo + 1000000000.12 WHERE cpf = '37567876542';
+UPDATE clientes SET saldo = saldo + 190 WHERE cpf = '37567876542';
+UPDATE clientes SET saldo = saldo + 560 WHERE cpf = '66545678765';
+UPDATE clientes SET saldo = saldo + 2500 WHERE cpf = '44565434213';
+\echo file ARQUIVO_CLIENTES
+
+-- cadastrando novas chaves PIX para os usuários
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'A') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '99876556782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '44565434213';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '14565436782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'N') WHERE cpf = '54654367865';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'N') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'A') WHERE cpf = '14565436782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'N') WHERE cpf = '99876556782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '44565434213';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '14565436782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '54654367865';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '23465784759';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '95724566812';
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index chaves_pix_index
+\echo index timestamp_cpf_origem_index
+
+-- gerando dados de transações
+INSERT INTO transacoes VALUES ('23465784759', '97301660-afcb-4ea4-a5a6-7c3abe8b8fbb', 120);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('14998786754', '95724566812', 790);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('8c29d4ca-06a1-4ef4-b45c-0470946831c5', 'mariaeugenia@gmail.com', 50);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('14998786754', '44565434213', 260.80);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('23465784759', 'ge.santana@gmail.com', 10);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('galmeida@gmail.com', 'ge.santana@gmail.com', 200);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('95724566812', '97301660-afcb-4ea4-a5a6-7c3abe8b8fbb', 190.00);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('95724566812', '66545678765', 300);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('95724566812', '15998765645', 200);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('95724566812', 'mariaeugenia@gmail.com', 75);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('ge.santana@gmail.com', '15998765645', 1184.4);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('97301660-afcb-4ea4-a5a6-7c3abe8b8fbb', '95724566812', 100.00);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('8c29d4ca-06a1-4ef4-b45c-0470946831c5', '97301660-afcb-4ea4-a5a6-7c3abe8b8fbb', 106);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('95724566812', '97301660-afcb-4ea4-a5a6-7c3abe8b8fbb', 95);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('97301660-afcb-4ea4-a5a6-7c3abe8b8fbb', 'melissa@gmail.com', 670);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('97301660-afcb-4ea4-a5a6-7c3abe8b8fbb', '99876556782', 670);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('97301660-afcb-4ea4-a5a6-7c3abe8b8fbb', '95724566812', 670);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('95724566812', 'mariaeugenia@gmail.com', 5);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+SET TIME 1633938457;
+SET SRAND 11945338153067011559;
+
+
+INSERT INTO transacoes VALUES ('melissa@gmail.com', '15997675654', 94);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('95724566812', '99876556782', 25);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('66545678765', 'ge.santana@gmail.com', 45);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('15998765645', 'ge.santana@gmail.com', 320);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('mariaeugenia@gmail.com', 'ge.santana@gmail.com', 75);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('99876556782', 'ge.santana@gmail.com', 119);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('44565434213', '15998765645', 334.6);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('ge.santana@gmail.com', '23465784759', 1340);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('23465784759', 'galmeida@gmail.com', 670);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+SELECT * FROM clientes ORDER BY cpf ASC;
+SELECT * FROM clientes WHERE cpf = '14565436782';
+SELECT * FROM clientes WHERE 'melissa@gmail.com' = ANY (chaves_pix);
+
+VACUUM clientes;
+
+-- transferência de e para o cliente F removido
+DELETE FROM clientes WHERE cpf = '14565436782';
+INSERT INTO transacoes VALUES ('melissa@gmail.com', 'mariaeugenia@gmail.com', 50);
+INSERT INTO transacoes VALUES ('mariaeugenia@gmail.com', '8c29d4ca-06a1-4ef4-b45c-0470946831c5', 50);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+SELECT * FROM clientes ORDER BY cpf ASC;
+SELECT * FROM clientes WHERE cpf = '14565436782';
+SELECT * FROM clientes WHERE 'melissa@gmail.com' = ANY (chaves_pix);
+
+-- cadastrando chave repetida do cliente removidp
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '37567876542';
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('melissa@gmail.com', 'mariaeugenia@gmail.com', 50);
+INSERT INTO transacoes VALUES ('mariaeugenia@gmail.com', 'melissa@gmail.com', 50);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+VACUUM clientes;
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index chaves_pix_index
+\echo index timestamp_cpf_origem_index
+
+DELETE FROM clientes WHERE cpf = '95724566812';
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index chaves_pix_index
+\echo index timestamp_cpf_origem_index
+
+DELETE FROM clientes WHERE cpf = '37567876542';
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index chaves_pix_index
+\echo index timestamp_cpf_origem_index
+
+DELETE FROM clientes WHERE cpf = '66545678765';
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index chaves_pix_index
+\echo index timestamp_cpf_origem_index
+
+VACUUM clientes;
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index chaves_pix_index
+\echo index timestamp_cpf_origem_index
+
+-- busca de transação
+SELECT * FROM transacoes WHERE cpf_origem = '14565436782' AND timestamp = '20211126002316';
+SELECT * FROM transacoes WHERE cpf_origem = '14565436782' AND timestamp = '20211011074737';
+SELECT * FROM transacoes WHERE cpf_origem = '23465784759' AND timestamp = '20211011074737';
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp = '20221008014443';
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp = '20221008014444';
+SELECT * FROM transacoes WHERE cpf_origem = '14565436782' AND timestamp = '20211029193813';
+
+-- listagem de transação por período
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211011074737' AND '20221008014443' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211011074737' AND '20211011074737' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211029193813' AND '20211029193813' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211126002316' AND '20211126002316' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20211216154606' AND '20211216154606' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220106164001' AND '20220106164001' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220125055815' AND '20220125055815' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220219021812' AND '20220219021812' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220310142007' AND '20220310142007' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220406151602' AND '20220406151602' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220125055815' AND '20220219021812' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20221008014443' AND '20221008014443' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20220219021812' AND '20220125055815' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '20221008014443' AND '2023' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE timestamp BETWEEN '2021' AND '20211011074737' ORDER BY timestamp ASC;
+
+-- listagem de transação por CPF de origem e período
+SELECT * FROM transacoes WHERE cpf_origem = '99876556782' AND timestamp BETWEEN '20211011074737' AND '20221008014443' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '66545678765' AND timestamp BETWEEN '20211011074737' AND '20221008014443' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp BETWEEN '20211011074737' AND '20211029193813' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp BETWEEN '20211126002316' AND '20220219021811' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '99876556782' AND timestamp BETWEEN '20221008014443' AND '20211011074737' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '95724566812' AND timestamp BETWEEN '20220310142007' AND '20220406151602' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '23465784759' AND timestamp BETWEEN '20220310142007' AND '20220406151602' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '23465784759' AND timestamp BETWEEN '20220310142007' AND '20220406151602' ORDER BY timestamp ASC;
+SELECT * FROM transacoes WHERE cpf_origem = '14565436782' AND timestamp BETWEEN '202201' AND '202203' ORDER BY timestamp ASC;
+
+\q

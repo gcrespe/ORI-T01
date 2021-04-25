@@ -1,0 +1,121 @@
+-- OPERAÇÕES CONTEMPLADAS PELO CASO DE TESTE:
+-- CADASTRO
+-- DEPÓSITO E SAQUE
+-- CADASTRO DE CHAVE PIX
+-- TRANSFERÊNCIA
+-- IMPRIMIR ARQUIVO CLIENTES
+-- IMPRIMIR ARQUIVO TRANSAÇÕES
+-- IMPRIMIR ÍNDICE SECUNDÁRIO DE CHAVES PIX
+-- IMPRIMIR ÍNDICE SECUNDÁRIO DE TRANSAÇÕES
+
+\echo file ARQUIVO_TRANSACOES
+
+-- cliente A
+INSERT INTO clientes VALUES ('66545678765', 'Maria Eugenia', '12/04/1980', 'mariaeugenia@gmail.com', '15998765645');
+
+-- cliente B
+INSERT INTO clientes VALUES ('99876556782', 'Gabriel Augusto', '04/05/1997', 'ga.augusto@gmail.com', '15997675654');
+
+-- cliente C
+INSERT INTO clientes VALUES ('44565434213', 'Geovana Santana', '25/10/1994', 'ge.santana@gmail.com', '16996543652');
+
+-- cliente D
+INSERT INTO clientes VALUES ('54654367865', 'Gustavo Almeida', '19/11/1992', 'galmeida@gmail.com', '14998786754');
+
+-- cliente E
+INSERT INTO clientes VALUES ('37567876542', 'Melissa Santos', '13/04/1977', 'melissa@gmail.com', '15998765435');
+
+-- cliente F, email igual ao do cliente E
+INSERT INTO clientes VALUES ('14565436782', 'Melissa Pereira', '19/09/1993', 'melissa@gmail.com', '15997654738');
+
+-- cliente G, celular igual ao do cliente D
+INSERT INTO clientes VALUES ('23465784759', 'Jose Santos', '03/07/1968', 'josesantos@gmail.com', '14998786754');
+\echo file ARQUIVO_CLIENTES
+
+-- Cliente H
+INSERT INTO clientes VALUES ('95724566812', 'Roberto Oliveira Jr.', '06/07/1976', 'rojr@house.tech', '11976764356');
+\echo file ARQUIVO_CLIENTES
+
+-- adicionando fundos às contas
+UPDATE clientes SET saldo = saldo + 1250.80 WHERE cpf = '54654367865';
+UPDATE clientes SET saldo = saldo + 250 WHERE cpf = '14565436782';
+UPDATE clientes SET saldo = saldo + 130 WHERE cpf = '23465784759';
+UPDATE clientes SET saldo = saldo + 250.80 WHERE cpf = '37567876542';
+UPDATE clientes SET saldo = saldo + 1000000000.12 WHERE cpf = '37567876542';
+UPDATE clientes SET saldo = saldo + 190 WHERE cpf = '37567876542';
+UPDATE clientes SET saldo = saldo + 560 WHERE cpf = '66545678765';
+UPDATE clientes SET saldo = saldo + 2500 WHERE cpf = '44565434213';
+\echo file ARQUIVO_CLIENTES
+
+-- cadastrando novas chaves PIX para os usuários
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'A') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '99876556782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '44565434213';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '14565436782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'N') WHERE cpf = '54654367865';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'N') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'A') WHERE cpf = '14565436782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'N') WHERE cpf = '99876556782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '44565434213';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '14565436782';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '54654367865';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '23465784759';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '95724566812';
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index chaves_pix_index
+\echo index timestamp_cpf_origem_index
+
+-- transferir corretamente
+INSERT INTO transacoes VALUES ('23465784759', '97301660-afcb-4ea4-a5a6-7c3abe8b8fbb', 120);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('14998786754', '95724566812', 790);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('melissa@gmail.com', '15997675654', 94);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+INSERT INTO transacoes VALUES ('8c29d4ca-06a1-4ef4-b45c-0470946831c5', 'mariaeugenia@gmail.com', 50);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+-- transferir para si mesmo
+INSERT INTO transacoes VALUES ('mariaeugenia@gmail.com', '15998765645', 50);
+INSERT INTO transacoes VALUES ('15998765645', 'mariaeugenia@gmail.com', 50);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+-- valor inválido
+INSERT INTO transacoes VALUES ('melissa@gmail.com', 'mariaeugenia@gmail.com', -10);
+INSERT INTO transacoes VALUES ('melissa@gmail.com', 'mariaeugenia@gmail.com', 0);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+-- cliente de origem com saldo insuficiente
+INSERT INTO transacoes VALUES ('23465784759', 'mariaeugenia@gmail.com', 11);
+INSERT INTO transacoes VALUES ('23465784759', 'mariaeugenia@gmail.com', 10); -- saldo suficiente
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index timestamp_cpf_origem_index
+
+-- chaves PIX não cadastradas
+INSERT INTO transacoes VALUES ('54654367865', '23465784759', 10);
+INSERT INTO transacoes VALUES ('23465784759', '54654367865', 10);
+\echo file ARQUIVO_CLIENTES
+\echo file ARQUIVO_TRANSACOES
+\echo index chaves_pix_index
+\echo index timestamp_cpf_origem_index
+
+\q

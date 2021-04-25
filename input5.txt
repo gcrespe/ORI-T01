@@ -1,0 +1,57 @@
+SET ARQUIVO_CLIENTES '66545678765;Maria Eugenia;12/04/1980;mariaeugenia@gmail.com;15998765645;0000000000.00;A97301660-afcb-4ea4-a5a6-7c3abe8b8fbb&C66545678765&N15998765645&Emariaeugenia@gmail.com;##################################################################################99876556782;Gabriel Augusto;04/05/1997;ga.augusto@gmail.com;15997675654;0000000000.00;C99876556782&Ega.augusto@gmail.com;#######################################################################################################################################44565434213;Geovana Santana;25/10/1994;ge.santana@gmail.com;16996543652;0000000000.00;Ege.santana@gmail.com&C44565434213;#######################################################################################################################################54654367865;Gustavo Almeida;19/11/1992;galmeida@gmail.com;14998786754;0000000000.00;N14998786754&Egalmeida@gmail.com;###########################################################################################################################################37567876542;Melissa Santos;13/04/1977;melissa@gmail.com;15998765435;0000000000.00;;#############################################################################################################################################################################14565436782;Melissa Pereira;19/09/1993;melissa@gmail.com;15997654738;0000000000.00;Emelissa@gmail.com&A4064b4e3-53ac-4469-a819-708177365752&C14565436782;#######################################################################################################23465784759;Jose Santos;03/07/1968;josesantos@gmail.com;14998786754;0000000000.00;;#############################################################################################################################################################################';
+
+-- OPERAÇÕES CONTEMPLADAS PELO CASO DE TESTE:
+-- COM ARQUIVO DE CLIENTES
+-- CADASTRO
+-- CADASTRO DE CHAVE PIX
+-- BUSCA DE CLIENTES POR CPF
+-- BUSCA DE CLIENTES POR CHAVE PIX
+-- LISTAGEM DE CLIENTES
+-- IMPRIMIR ARQUIVO CLIENTES
+-- IMPRIMIR ÍNDICE SECUNDÁRIO DE CHAVES PIX
+
+\echo file ARQUIVO_CLIENTES
+\echo index chaves_pix_index
+SELECT * FROM clientes ORDER BY cpf ASC;
+
+-- cadastrando chave ALEATÓRIA para o cliente C
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'A') WHERE cpf = '44565434213';
+
+-- tentando cadastrar chaves PIX duplicadas
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'A') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '44565434213';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'N') WHERE cpf = '54654367865';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'C') WHERE cpf = '66545678765';
+UPDATE clientes SET chaves_pix = array_append(chaves_pix, 'E') WHERE cpf = '54654367865';
+
+-- buscando usuários existentes pelo CPF
+SELECT * FROM clientes WHERE cpf = '14565436782';
+SELECT * FROM clientes WHERE cpf = '23465784759';
+SELECT * FROM clientes WHERE cpf = '37567876542';
+SELECT * FROM clientes WHERE cpf = '44565434213';
+SELECT * FROM clientes WHERE cpf = '54654367865';
+SELECT * FROM clientes WHERE cpf = '66545678765';
+SELECT * FROM clientes WHERE cpf = '99876556782';
+
+-- buscando usuários inexistentes pelo CPF
+SELECT * FROM clientes WHERE cpf = '12565436782';
+SELECT * FROM clientes WHERE cpf = '75565434213';
+SELECT * FROM clientes WHERE cpf = '99976556782';
+
+-- buscando usuários existentes pela chave PIX
+SELECT * FROM clientes WHERE '97301660-afcb-4ea4-a5a6-7c3abe8b8fbb' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE '4064b4e3-53ac-4469-a819-708177365752' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE '99876556782' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE '66545678765' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE 'ga.augusto@gmail.com' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE 'mariaeugenia@gmail.com' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE 'melissa@gmail.com' = ANY (chaves_pix);
+
+-- buscando clientes por chaves PIX inexistentes ou não cadastradas
+SELECT * FROM clientes WHERE '6bbc4c97-55b7-48fa-9e43-b53d5ad37f8d' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE 'josesantos@gmail.com' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE '15998765435' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE '54654367865' = ANY (chaves_pix);
+SELECT * FROM clientes WHERE '15997675654' = ANY (chaves_pix);
+
+\q
